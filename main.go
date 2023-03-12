@@ -17,6 +17,14 @@ func healthHandler(w http.ResponseWriter, req *http.Request) {
   w.Write([]byte("OK"))
 }
 
+func notFoundHandler(w http.ResponseWriter, req *http.Request) {
+  w.WriteHeader(404)
+}
+
+func errorHandler(w http.ResponseWriter, req *http.Request) {
+  w.WriteHeader(500)
+}
+
 func echoHandler(w http.ResponseWriter, req *http.Request) {
   var err error
   res := &request{}
@@ -41,6 +49,8 @@ func echoHandler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
   http.HandleFunc("/health", healthHandler)
+  http.HandleFunc("/notfound", notFoundHandler)
+  http.HandleFunc("/error", errorHandler)
   http.HandleFunc("/", echoHandler)
 
   http.ListenAndServe(":8080", nil)
