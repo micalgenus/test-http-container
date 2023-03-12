@@ -4,6 +4,7 @@ import (
   "encoding/json"
   "io/ioutil"
   "net/http"
+  "time"
 )
 
 type response struct {
@@ -23,6 +24,11 @@ func notFoundHandler(w http.ResponseWriter, req *http.Request) {
 
 func errorHandler(w http.ResponseWriter, req *http.Request) {
   w.WriteHeader(500)
+}
+
+func sleepHandler(w http.ResponseWriter, req *http.Request) {
+  time.Sleep(3 * time.Second)
+  w.Write([]byte("OK"))
 }
 
 func echoHandler(w http.ResponseWriter, req *http.Request) {
@@ -51,6 +57,7 @@ func main() {
   http.HandleFunc("/health", healthHandler)
   http.HandleFunc("/notfound", notFoundHandler)
   http.HandleFunc("/error", errorHandler)
+  http.HandleFunc("/sleep", sleepHandler)
   http.HandleFunc("/", echoHandler)
 
   http.ListenAndServe(":8080", nil)
