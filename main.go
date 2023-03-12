@@ -33,7 +33,7 @@ func sleepHandler(w http.ResponseWriter, req *http.Request) {
 
 func echoHandler(w http.ResponseWriter, req *http.Request) {
   var err error
-  res := &request{}
+  res := &response{}
   res.Method = req.Method
   res.Headers = req.Header
   res.URL = req.URL.String()
