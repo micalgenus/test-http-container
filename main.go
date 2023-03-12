@@ -37,13 +37,13 @@ var letters = []byte("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 func randBytes(n int) []byte {
   b := make([]byte, n)
   for i := range b {
-    b[i] = letterRunes[rand.Intn(len(letterRunes))]
+    b[i] = letters[rand.Intn(len(letters))]
   }
   return b
 }
 
 func largeResponseHandler(w http.ResponseWriter, req *http.Request) {
-  w.Write(randString(1024 * 1024 * 10))
+  w.Write(randBytes(1024 * 1024 * 10))
 }
 
 func echoHandler(w http.ResponseWriter, req *http.Request) {
