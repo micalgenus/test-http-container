@@ -52,11 +52,8 @@ func echoHandler(w http.ResponseWriter, req *http.Request) {
   res.Method = req.Method
   res.Headers = req.Header
   res.URL = req.URL.String()
-  res.Body, err = ioutil.ReadAll(req.Body)
-  if err != nil {
-    http.Error(w, err.Error(), http.StatusInternalServerError)
-    return
-  }
+	res.Body = make([]byte, res.ContentLength)
+	req.Body.Read(res.Body)
 
   response, err := json.MarshalIndent(res, "", "  ")
   if err != nil {
