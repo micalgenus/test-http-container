@@ -5,6 +5,7 @@ import (
   "io/ioutil"
   "net/http"
   "time"
+  "rand"
 )
 
 type response struct {
@@ -31,6 +32,20 @@ func sleepHandler(w http.ResponseWriter, req *http.Request) {
   w.Write([]byte("OK"))
 }
 
+var letters = []byte("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+func randBytes(n int) []byte {
+  b := make([]byte, n)
+  for i := range b {
+    b[i] = letterRunes[rand.Intn(len(letterRunes))]
+  }
+  return b
+}
+
+func largeResponseHandler(w http.ResponseWriter, req *http.Request) {
+  w.Write(randString(1024 * 1024 * 10))
+}
+
 func echoHandler(w http.ResponseWriter, req *http.Request) {
   var err error
   res := &response{}
@@ -54,10 +69,13 @@ func echoHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+  rand.Seed(time.Now().UnixNano())
+
   http.HandleFunc("/health", healthHandler)
   http.HandleFunc("/notfound", notFoundHandler)
   http.HandleFunc("/error", errorHandler)
   http.HandleFunc("/sleep", sleepHandler)
+  http.HandleFunc("/large", largeResponseHandler)
   http.HandleFunc("/", echoHandler)
 
   http.ListenAndServe(":8080", nil)
