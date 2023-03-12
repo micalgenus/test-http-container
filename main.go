@@ -5,7 +5,7 @@ import (
   "io/ioutil"
   "net/http"
   "time"
-  "rand"
+  "math/rand"
 )
 
 type response struct {
