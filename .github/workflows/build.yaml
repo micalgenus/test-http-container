@@ -2,7 +2,7 @@ name: github-actions/build
 on:
   pull_request:
     branches:
-      - develop
+      - main
 
 permissions:
   contents: write
