@@ -4,6 +4,10 @@ on:
     branches:
       - develop
 
+    tags:
+      - v2
+      - v1.*
+
 jobs:
   deploy:
     name: Deploy

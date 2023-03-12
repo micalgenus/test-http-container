@@ -25,3 +25,9 @@ jobs:
 
       - name: Build
         run: go build -v ./...
+
+      - name: Update go.sum
+        run: |
+          git add go.sum && \
+          git commit -m '[ci] update go.sum' && \
+          git push $GITHUB_REF
