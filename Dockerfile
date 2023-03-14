@@ -9,7 +9,7 @@ COPY --from=builder /home/test-http-container /usr/local/bin/test-http-container
 WORKDIR /
 
 RUN apt update -y && \
-    apt install -y curl && \
+    apt install -y curl tcpdump && \
     apt-get clean -y
 
 ENTRYPOINT /usr/local/bin/test-http-container
