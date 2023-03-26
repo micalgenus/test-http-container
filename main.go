@@ -5,13 +5,15 @@ import (
   "net/http"
   "time"
   "math/rand"
+  "os"
 )
 
 type response struct {
-  URL     string      "json:\"url\""
-  Method  string      "json:\"method\""
-  Headers http.Header "json:\"headers\""
-  Body    []byte      "json:\"body\""
+  URL          string      "json:\"url\""
+  Method       string      "json:\"method\""
+  Headers      http.Header "json:\"headers\""
+  Pod          string      "json:\"pod\""
+  Body         []byte      "json:\"body\""
 }
 
 func healthHandler(w http.ResponseWriter, req *http.Request) {
@@ -50,6 +52,7 @@ func echoHandler(w http.ResponseWriter, req *http.Request) {
   res := &response{}
   res.Method = req.Method
   res.Headers = req.Header
+  res.Pod = os.Getenv("POD_NAME")
   res.URL = req.URL.String()
 	res.Body = make([]byte, req.ContentLength)
 	req.Body.Read(res.Body)
